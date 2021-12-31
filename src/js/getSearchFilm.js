@@ -1,5 +1,6 @@
 import { fetchSearch } from './apiService';
 
+
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = 'cfdb2a8aab50d545dc8a1d0938de62d8';
 
@@ -9,16 +10,21 @@ async function fetchGenres() {
   return await response.json();
 }
 
+
 const refs = {
   inputHero: document.querySelector('.hero__input'),
   filmsUl: document.querySelector('.films__list'),
   heroButton: document.querySelector('.hero__button'),
   error: document.querySelector('.text-error'),
+
+  pagination: document.querySelector('#pagination'),
+n
 };
 
 refs.heroButton.addEventListener('click', onClick);
 
 function onClick(e) {
+
   const queryValue = refs.inputHero.value;
   if (queryValue === '') {
     refs.filmsUl.innerHTML = '';
@@ -59,4 +65,5 @@ function renderMarkup(film) {
     )
     .join('');
   refs.filmsUl.insertAdjacentHTML('beforeend', markup);
+
 }

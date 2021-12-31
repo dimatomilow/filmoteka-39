@@ -1,11 +1,221 @@
-.film-card__backdrop::before{
-    content: '';
-    background: #000;
-    position: fixed;
-    left:0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.25;
-    z-index: 1000;
+.modal {
+  padding: 50px 30px 40px;
+  width: 806px;
+  height: 568px;
+  background-color: var(--background-color-film);
+  box-shadow: var(--films-hover);
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  border-radius: 5px;
+  // &__close-btn{
+  //   position: absolute;
+  //   right: 10px;
+  //   top: 10px;
+  //     width: 30px;
+  //     height: 30px;
+  //     }
+  //     &:before, &:after {
+  //     position: absolute;
+  //     top:9px;
+  //     right: 24px;
+  //     content: ' ';
+  //     height: 33px;
+  //     width: 2px;
+  //     background-color: #333;
+  //     }
+  //     &:before {
+  //     transform: rotate(45deg);
+  //     }
+  //     &:after {
+  //     transform: rotate(-45deg);
+  //     }
+    }
+      
+  
+
+.modal__poster {
+  border-radius: 5px;
+  width: 100%;
+  height: auto;
+  &--wrapper{
+    width: 318px;
+    height: 477px;
+  }
+}
+.upper{
+  text-transform: uppercase;
+  word-wrap:break-word;
+}
+.modal__parameters {
+  display: block;
+  // position: absolute;
+  height: 100%;
+  width: 396px;
+  &--title {
+    top: 50px;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  &--data {
+    display: block;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  &--list {
+    color: var( --modal-text-color);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.33;
+    display: flex;
+    
+    &:not(:last-child){
+      margin-bottom: 10px;
+    }
+    
+    &-name{
+      min-width: 70px;
+      margin-right: 40px;
+      white-space: nowrap;
+    }
+  }
+  
+  &--list-status {
+    position: relative;
+    
+  }
+  &--value{
+    color:var(--primary-text-color);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.33;
+    
+    &-summar{
+    color: var(--secondary-text-color);
+    background-color: #FF6B01;
+    border-radius: 5px;
+    padding: 0px 6px;
+    }
+    &-slash{
+      background-color: var(--secondary-text-color);
+      border-radius: 5px;
+      padding: 0px 6px;}
+    
+  }
+&--value:not(:last-child) {
+    margin-bottom: 10px;
+    color: var(--primary-text-color);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.33;
+  }
+
+  &--title {
+    top: 50px;
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--primary-text-color);
+    text-transform: uppercase;
+  }
+}
+//.modal__parameter--summar {
+//  margin-left: 0;
+//}
+
+.modal__description {
+  position: relative;
+  display: block;
+
+  &--about {
+    max-height: 160px;
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--primary-text-color);
+    line-height: 1.66;
+    word-wrap: break-word;
+    overflow-y: auto;
+  }
+  &--buttons {
+    display: flex;
+    margin-top: 21px;
+  }
+  &--button:not(:last-child) {
+    margin-right: 15px;
+  }
+  &--button-action {
+    border: 1px solid;
+    border-color: var(--primary-text-color);
+    background-color: transparent;
+    color: var(--primary-text-color);
+    border-radius: 5px;
+    height: 44px;
+    width: 136px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+}
+.modal__description--title{
+text-transform: uppercase;
+color: #000000;
+font-size: 12px;
+font-weight: 500;
+line-height: 1.33;
+  }
+
+
+.active {
+  color: var(--secondary-text-color);
+  background-color: #ff6b01;
+  border-color: #ff6b01;
+}
+
+.result__link {
+  display: block;
+  height: 100%;
+}
+
+@media screen and (min-width:767px) and (max-width: 1023px){
+  .modal{
+    width: 618px;
+    height: 562px;
+    }
+}
+
+@media screen and (max-width:767px){
+  .modal{
+
+  &::-webkit-scrollbar { width: 0; }
+  width:280px;
+  height: 95vh;
+
+  display: block;
+  padding: 50px 20px 40px;
+  overflow-y: auto;
+&__poster{
+  width: 100%;
+  height: auto;
+  
+&--wrapper{
+  width: 240px;
+  height: 356px;
+  margin-bottom: 30px;}
+    }
+&__parameters{
+  display: block;
+  width: 100%;height: auto;
+  &--title{
+    font-size: 20px;
+    }
+}    
+  }
+.modal__description--button-action{
+  width: 112px;
+}
 }
