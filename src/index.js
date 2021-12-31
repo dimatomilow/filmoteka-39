@@ -7,6 +7,6 @@ import './js/pagination.js';
 import './js/popular';
 import './js/getSearchFilm.js';
 import './js/scrollTop';
-// import './js/firebaseGoogAuth';
+import './js/firebaseGoogAuth';
 import './js/them.js';
 
