@@ -1,9 +1,12 @@
 import * as basicLightbox from 'basiclightbox';
 // import 'basiclightbox/dist/basicLightbox.min.css'
 import axios from 'axios';
-import { fetchMovies } from './apiService';
+import { fetchMovies, getMultipleMovies } from './apiService';
+import { markupFilm } from './my-library';
 
 const cardEl = document.querySelector('.films__list');
+const libraryFlag = document.querySelector('.hero__lib-background');
+const emptyList = document.querySelector('.empty-list');
 const unknownGenreName = 'Common';
 
 cardEl.addEventListener('click', event => {
@@ -26,7 +29,10 @@ cardEl.addEventListener('click', event => {
     descr = data.overview;
     original = data.original_title;
     popularity = data.popularity;
-    genre = data.genres.map(el => el.name).join(', ');
+    genre = data.genres
+      .map(el => el.name)
+      .slice(0, 2)
+      .join(', ');
     onFilmCardClick(genre, popularity, original, title, post, descr, vote, votes, filmId);
   });
 });
@@ -43,12 +49,10 @@ function onFilmCardClick(genre, popularity, original, title, post, descr, vote, 
   const instance = basicLightbox.create(
     `
     <div class="modal">
-        <svg class="modal__close-btn">
-            <use href="../images/sprite.svg#icon-x_cross" class="modal_close-btn--cross" width="14px" height="14px"></use>
-        </svg>
-        <img src="${
+    <span class="modal__close-btn"></span>
+        <div class="modal__poster--wrapper"><img src="${
           post ? 'https://image.tmdb.org/t/p/w500/' + post : 'https://i.ibb.co/4MnLhbM/sorry1.jpg'
-        }" class="modal__poster" width="396" height="478">
+        }" class="modal__poster" ></div>
         
         <div class="modal__parameters">
             <div class="modal__parameters--information">
@@ -56,23 +60,27 @@ function onFilmCardClick(genre, popularity, original, title, post, descr, vote, 
                 <div class="modal__parameters--data">
                     <ul class="modal__parameters--list">
                         <li class="modal__parameters--list-name">Vote / Votes</li>
+                        <li class="modal__parameters--value"><span class="modal__parameters--value-summar">${vote}</span>  / <span class="modal__parameters--value-slash">${votes}</span></li>
+                    </ul>
+                    <ul class="modal__parameters--list">
                         <li class="modal__parameters--list-name">Popularity</li>
+                        <li class="modal__parameters--value">${popularity.toFixed(1)}</li>
+                    </ul>
+                    <ul class="modal__parameters--list">
                         <li class="modal__parameters--list-name">Original Title</li>
+                        <li class="modal__parameters--value upper">${original}</li>
+                    </ul>
+                    <ul class="modal__parameters--list">
                         <li class="modal__parameters--list-name">Genre</li>
+                        <li class="modal__parameters--value">
+                        ${genre ? genre : unknownGenreName}</li>
                     </ul>
-                        <ul class="modal__parameters--list-status">
-                        <li class="modal__parameters--value"><span class="modal__parameter--summar">${vote}/</span>${votes}</li>
-                        <li class="modal__parameters--value">${popularity}</li>
-                        <li class="modal__parameters--value">${original}</li>
-                        <li class="modal__parameters--value">${
-                          genre ? genre : unknownGenreName
-                        }</li>
-                    </ul>
+                        
                 </div>    
             </div>
             <div class="modal__description">
                 <h3 class="modal__description--title">About</h3>
-                <p class="modal__description--about">${descr}</p>
+                <p class="modal__description--about scrollbar">${descr}</p>
                 <ul class="modal__description--buttons">
                     <li class="modal__description--button">
                         <button class="modal__description--button-action addToWatchBtn ${
@@ -139,6 +147,7 @@ function addToLibrary(event) {
       localStorage.setItem('watch', JSON.stringify(uniqueId));
       addToWatchBtn.classList.remove('active');
       addToWatchBtn.textContent = 'add to watched';
+      rerenderMyLibraryFilms(uniqueId, 'watched');
     } else {
       watchedFilms.push(event.target.dataset.id);
       localStorage.setItem('watch', JSON.stringify(watchedFilms));
@@ -153,11 +162,25 @@ function addToLibrary(event) {
       localStorage.setItem('queue', JSON.stringify(uniqueId));
       addToQueueBtn.classList.remove('active');
       addToQueueBtn.textContent = 'add to queue';
+      rerenderMyLibraryFilms(uniqueId, 'queue');
     } else {
       queueFilms.push(event.target.dataset.id);
       localStorage.setItem('queue', JSON.stringify(queueFilms));
       addToQueueBtn.classList.add('active');
       addToQueueBtn.textContent = 'remove from queue';
+    }
+  }
+}
+
+function rerenderMyLibraryFilms(ids, type) {
+  if (libraryFlag) {
+    cardEl.innerHTML = '';
+    if (ids.length > 0) {
+      getMultipleMovies(ids).then(res =>
+        res.map(film => cardEl.insertAdjacentHTML('afterbegin', markupFilm(film.data))),
+      );
+    } else {
+      emptyList.innerHTML = `My ${type} films library is empty`;
     }
   }
 }
