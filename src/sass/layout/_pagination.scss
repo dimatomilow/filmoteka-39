@@ -1,3 +1,6 @@
+.tui-pagination {
+  margin-top: auto !important;
+}
 .tui-pagination .tui-is-selected,
 .tui-pagination strong {
   color: #fff !important;
@@ -22,8 +25,8 @@
 }
 
 .tui-page-btn:hover {
-  background-color: #fff !important;
   color: #ff6b08 !important;
+  background-color: transparent !important;
 }
 
 .tui-first,

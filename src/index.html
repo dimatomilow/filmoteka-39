@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../node_modules/basiclightbox/dist/basicLightbox.min.css" />
     <link rel="stylesheet" href="../node_modules/tui-pagination/dist/tui-pagination.min.css" />
   </head>
-  <body>
+  <body class="scrollbar">
     <include src="./partials/header.html"></include>
 
     <main>
@@ -26,6 +26,7 @@
     <ul class="gallery" id="gallery"></ul>
     <div id="pagination" class="tui-pagination"></div>
     <include src="./partials/footer.html"></include>
+    <button id="scrollUpLink" class="up"></button>
 
     <include src="./partials/modal-window-team.html"></include>
 
